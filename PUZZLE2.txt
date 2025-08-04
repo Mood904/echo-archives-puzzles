@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Whispered Name</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: #f7f1e3;
+      color: #2b2b2b;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    .symbols-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .symbol {
+      font-size: 2.5rem;
+      padding: 20px;
+      margin: 10px;
+      border: 2px dashed #856b4d;
+      width: 70px;
+      cursor: grab;
+      background-color: #fffdf6;
+      user-select: none;
+    }
+
+    .overlay-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      margin-top: 30px;
+    }
+
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .grid-slot {
+      font-size: 2rem;
+      border: 2px solid #aaa;
+      background: #fdfaf2;
+      width: 80px;
+      height: 60px;
+      line-height: 60px;
+      margin: 5px 0;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      background-color: #ccb28e;
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .result {
+      font-size: 1.5em;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .notebook-image {
+      width: 200px;
+      height: auto;
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>The Whispered Name</h1>
+  <p>“The thread lies tangled… but still sings when aligned.”</p>
+
+  <div class="symbols-container" id="symbols">
+    <!-- Symbols will be inserted here dynamically -->
+  </div>
+
+ <div class="overlay-container">
+  <div class="overlay" id="overlay">
+    <div class="grid-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="grid-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="grid-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="grid-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="grid-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="grid-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+  </div>
+  <img class="notebook-image" src="https://i.imgur.com/8oKMrCp.png" alt="Notebook overlay showing the correct frame">
+</div>
+
+
+  <div>
+    <button class="submit-btn" onclick="checkAnswer()">Submit</button>
+    <button class="submit-btn" onclick="resetGrid()">Reset Grid</button>
+    <button class="submit-btn" onclick="shuffleSymbols()">Shuffle Symbols</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    let dragged;
+    const correctOrder = ['ɪ','𐌌','Ꝋ','ʛ','ę','Ƞ'];
+    const symbolPool = ['𐌌','Ꝋ','ę','ʛ','ɪ','N','Ƞ'];
+
+    function renderSymbols() {
+      const container = document.getElementById('symbols');
+      container.innerHTML = '';
+      const shuffled = [...symbolPool].sort(() => 0.5 - Math.random());
+      shuffled.forEach(sym => {
+        const el = document.createElement('div');
+        el.className = 'symbol';
+        el.draggable = true;
+        el.textContent = sym;
+        el.addEventListener('dragstart', function(e) {
+          dragged = e.target;
+        });
+        container.appendChild(el);
+      });
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      if (dragged && ev.target.classList.contains('grid-slot')) {
+        ev.target.textContent = dragged.textContent;
+      }
+    }
+
+    function checkAnswer() {
+      const slots = document.querySelectorAll('.grid-slot');
+      let current = [];
+      slots.forEach(slot => {
+        if (slot.textContent.trim() !== '') current.push(slot.textContent.trim());
+      });
+
+      const isCorrect = JSON.stringify(current) === JSON.stringify(correctOrder);
+      document.getElementById('result').textContent = isCorrect
+        ? "✔️ The name is IMOGENE. You've aligned the thread."
+        : "❌ The thread is still tangled. Try again.";
+    }
+
+    function resetGrid() {
+      document.querySelectorAll('.grid-slot').forEach(slot => slot.textContent = '');
+      document.getElementById('result').textContent = '';
+    }
+
+    function shuffleSymbols() {
+      renderSymbols();
+      resetGrid();
+    }
+
+    // Initial render
+    renderSymbols();
+  </script>
+
+</body>
+</html>
