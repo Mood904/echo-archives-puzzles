@@ -1,310 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Archives - Access Terminal</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-            font-family: 'Courier Prime', monospace;
-            color: #00ff88;
-            overflow: hidden;
-            height: 100vh;
-        }
-        
-        .terminal-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .terminal {
-            background: rgba(0, 0, 0, 0.85);
-            border: 2px solid #00ff88;
-            border-radius: 10px;
-            padding: 30px;
-            width: 500px;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
-            position: relative;
-        }
-        
-        .terminal::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00ff88, #0088ff, #8800ff, #ff0088);
-            border-radius: 12px;
-            z-index: -1;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { opacity: 0.5; }
-            to { opacity: 1; }
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        .title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #00ff88;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
-        }
-        
-        .subtitle {
-            font-size: 14px;
-            color: #88ffaa;
-            opacity: 0.8;
-        }
-        
-        .access-form {
-            margin: 30px 0;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #88ffaa;
-            font-size: 14px;
-        }
-        
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            background: rgba(0, 20, 0, 0.9);
-            border: 1px solid #00ff88;
-            border-radius: 5px;
-            color: #00ff88;
-            font-family: 'Courier Prime', monospace;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-        
-        .input-field:focus {
-            outline: none;
-            border-color: #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-        }
-        
-        .access-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #00ff88, #00cc66);
-            border: none;
-            border-radius: 5px;
-            color: #000;
-            font-family: 'Courier Prime', monospace;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-        
-        .access-button:hover {
-            background: linear-gradient(45deg, #00cc66, #00aa44);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
-        }
-        
-        .hint-text {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #666;
-            opacity: 0.7;
-        }
-        
-        .error-message {
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid #ff4444;
-            color: #ff6666;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 15px;
-            text-align: center;
-            display: none;
-        }
-        
-        .success-message {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 15px;
-            text-align: center;
-            display: none;
-        }
-        
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -2;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #00ff88;
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.6;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) translateX(0px); }
-            25% { transform: translateY(-20px) translateX(10px); }
-            50% { transform: translateY(-10px) translateX(-10px); }
-            75% { transform: translateY(-30px) translateX(5px); }
-        }
-        
-        .typing-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 16px;
-            background: #00ff88;
-            animation: blink 1s infinite;
-            margin-left: 5px;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Echo Archives - Access Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+      font-family: 'Courier Prime', monospace;
+      color: #00ff88;
+      overflow: hidden;
+      height: 100vh;
+    }
+    .terminal-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .terminal {
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #00ff88;
+      border-radius: 10px;
+      padding: 30px;
+      width: 500px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+    }
+    .terminal::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      background: linear-gradient(45deg, #00ff88, #0088ff, #8800ff, #ff0088);
+      border-radius: 12px;
+      z-index: -1;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+    .title { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 5px; color: #00ff88; }
+    .subtitle { font-size: 14px; text-align: center; color: #88ffaa; opacity: 0.8; margin-bottom: 25px; }
+    .input-group { margin-bottom: 20px; }
+    .input-label { color: #88ffaa; font-size: 14px; margin-bottom: 8px; display: block; }
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      background: rgba(0, 20, 0, 0.9);
+      border: 1px solid #00ff88;
+      border-radius: 5px;
+      color: #00ff88;
+      font-family: 'Courier Prime', monospace;
+      font-size: 16px;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #00ffff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    .access-button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(45deg, #00ff88, #00cc66);
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-family: 'Courier Prime', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .access-button:hover {
+      background: linear-gradient(45deg, #00cc66, #00aa44);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+    }
+    .hint-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #aaa;
+      opacity: 0.7;
+    }
+    .error-message, .success-message {
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+    .error-message {
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid #ff4444;
+      color: #ff6666;
+    }
+    .success-message {
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid #00ff88;
+      color: #00ff88;
+    }
+    .loading-message {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00ff88;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+  </style>
 </head>
 <body>
-    <div class="particles">
-        <!-- Animated particles will be generated by JavaScript -->
+  <div class="terminal-container">
+    <div class="terminal">
+      <div class="title">ECHO ARCHIVES</div>
+      <div class="subtitle">Restricted Access Terminal</div>
+      <div class="input-group">
+        <label class="input-label">Enter Access Phrase:</label>
+        <input type="text" class="input-field" id="accessPhrase" placeholder="_ _ _ _ _ _ _   _ _ _ _ _">
+      </div>
+      <button class="access-button" onclick="checkAccess()">► DECRYPT ARCHIVE</button>
+      <div class="error-message" id="errorMsg">✖ ACCESS DENIED - Invalid phrase</div>
+      <div class="success-message" id="successMsg">✓ ACCESS GRANTED - Initializing archive...</div>
+      <div class="loading-message" id="loadingText">LOADING<span class="dots">.</span></div>
+      <div class="hint-text">Hint: The seamstress left her final words in verse</div>
     </div>
-    
-    <div class="terminal-container">
-        <div class="terminal">
-            <div class="header">
-                <div class="title">ECHO ARCHIVES</div>
-                <div class="subtitle">Restricted Access Terminal<span class="typing-indicator"></span></div>
-            </div>
-            
-            <div class="access-form">
-                <div class="input-group">
-                    <label class="input-label">Enter Access Phrase:</label>
-                    <input type="text" class="input-field" id="accessPhrase" placeholder="_ _ _ _ _ _ _   _ _ _ _ _">
-                </div>
-                
-                <button class="access-button" onclick="checkAccess()">
-                    ► DECRYPT ARCHIVE
-                </button>
-                
-                <div class="error-message" id="errorMsg">
-                    ✖ ACCESS DENIED - Invalid phrase
-                </div>
-                
-                <div class="success-message" id="successMsg">
-                    ✓ ACCESS GRANTED - Initializing archive...
-                </div>
-            </div>
-            
-            <div class="hint-text">
-                Hint: The seamstress left her final words in verse
-            </div>
-        </div>
-    </div>
+  </div>
 
-    <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // Check access phrase
-        function checkAccess() {
-            const input = document.getElementById('accessPhrase').value.trim().toLowerCase();
-            const correctPhrase = 'uncover grace';
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-            
-            if (input === correctPhrase) {
-                errorMsg.style.display = 'none';
-                successMsg.style.display = 'block';
-                
-                // Simulate archive loading
-                setTimeout(() => {
-                    document.body.style.transition = 'opacity 1s ease';
-                    document.body.style.opacity = '0';
-                    
-                    setTimeout(() => {
-                        // This is where you'd redirect to the next Genially slide
-                        alert('Archive unlocked! (In Genially, this would go to the next slide)');
-                        document.body.style.opacity = '1';
-                    }, 1000);
-                }, 2000);
-                
-            } else {
-                successMsg.style.display = 'none';
-                errorMsg.style.display = 'block';
-                
-                // Shake animation
-                document.querySelector('.terminal').style.animation = 'shake 0.5s ease-in-out';
-                setTimeout(() => {
-                    document.querySelector('.terminal').style.animation = '';
-                }, 500);
-            }
-        }
-        
-        // Allow Enter key to submit
-        document.getElementById('accessPhrase').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkAccess();
-            }
-        });
-        
-        // Add shake animation
-        const style = document.createElement('style');
-        style.textContent = 
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
-            }
-        ;
-        document.head.appendChild(style);
-        
-        // Initialize particles
-        createParticles();
-    </script>
+  <script>
+    function checkAccess() {
+      const input = document.getElementById('accessPhrase').value.trim().toLowerCase();
+      const correctPhrase = 'uncover grace';
+      const errorMsg = document.getElementById('errorMsg');
+      const successMsg = document.getElementById('successMsg');
+      const loadingText = document.getElementById('loadingText');
+
+      if (input === correctPhrase) {
+        errorMsg.style.display = 'none';
+        successMsg.style.display = 'block';
+        loadingText.style.display = 'block';
+        animateDots();
+
+        setTimeout(() => {
+          document.body.style.transition = 'opacity 1s ease';
+          document.body.style.opacity = '0';
+
+          setTimeout(() => {
+            // In real game: window.location.href = "nextPuzzle.html";
+            alert('Archive unlocked! (This would go to the next puzzle)');
+            document.body.style.opacity = '1';
+          }, 1000);
+        }, 3000);
+      } else {
+        successMsg.style.display = 'none';
+        errorMsg.style.display = 'block';
+        document.querySelector('.terminal').style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+          document.querySelector('.terminal').style.animation = '';
+        }, 500);
+      }
+    }
+
+    function animateDots() {
+      const dots = document.querySelector('.dots');
+      let count = 0;
+      setInterval(() => {
+        count = (count + 1) % 4;
+        dots.textContent = '.'.repeat(count);
+      }, 400);
+    }
+
+    document.getElementById('accessPhrase').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') checkAccess();
+    });
+  </script>
 </body>
 </html>
