@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Echo Archives - Entry Portal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier Prime', monospace;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .background {
+      background: url('assets/collage.png') no-repeat center center fixed;
+      background-size: cover;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      filter: brightness(0.8);
+      z-index: -1;
+    }
+
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #00ff88;
+      height: 100%;
+      padding: 0 20px;
+      backdrop-filter: blur(2px);
+    }
+
+    h1 {
+      font-size: 3em;
+      text-shadow: 0 0 15px #00ff88;
+    }
+
+    p {
+      font-size: 1.3em;
+      color: #aaffcc;
+      max-width: 700px;
+      margin-bottom: 2em;
+      text-shadow: 0 0 8px #001a10;
+    }
+
+    .start-btn {
+      background: linear-gradient(45deg, #00ff88, #00cc66);
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #000;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .start-btn:hover {
+      background: linear-gradient(45deg, #00cc66, #009944);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00ff88;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.8em;
+      color: #99ffcc;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="overlay">
+    <h1>ECHO ARCHIVES</h1>
+    <p>You are Dr. Sefina Olayemi Greer. Linguist. Scientist. Mother.  
+       A chant from the past arrives. Secrets awaken.  
+       Step into the archive. Reclaim the truth.</p>
+    <button class="start-btn" onclick="window.location.href='https://your-genially-link.com'">Begin Mission</button>
+  </div>
+  <div class="footer">© Echo Archives | Mystery Escape Game</div>
+</body>
+</html>
